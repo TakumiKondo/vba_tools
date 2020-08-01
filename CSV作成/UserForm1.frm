@@ -90,11 +90,30 @@ Sub createFile(sheetName As String)
             Next col
         Next Row
     
-        ' 上書きせず、別名保存する
+        ' UTF-8(BOM無し)であれば、BOMを削除
+        If CharCodeBox.Text = "UTF-8(BOM無し)" Then
+            'ストリームの位置を0から3にする
+            .Position = 0
+            .Type = 1   ' Binary Type に変更
+            .Position = 3
+
+            ' データ退避
+            Dim nonBomData
+            nonBomData = .Read
+            .Close
+
+            ' 退避データの書き込み
+            .Open
+            .Write nonBomData
+        End If
+        
+        ' 別名保存
         .SaveToFile saveFileName(fileName), 1
         .Close
+        
     End With
 End Sub
+
 
 
 ' /**
@@ -146,7 +165,7 @@ End Function
 '  * 文字コードの取得
 ' /*
 Private Function charCode()
-    If CharCodeBox.Text = "UTF-8" Then
+    If CharCodeBox.Text Like "UTF-8*" Then
         charCode = "UTF-8"
         Exit Function
     End If
@@ -211,7 +230,8 @@ Private Sub UserForm_Initialize()
     
     ' 文字コードの初期化
     With CharCodeBox
-        .AddItem "UTF-8"
+        .AddItem "UTF-8(BOM無し)"
+        .AddItem "UTF-8(BOMあり)"
         .AddItem "SJIS"
         .ListIndex = 0
     End With
