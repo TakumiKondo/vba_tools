@@ -70,7 +70,7 @@ End Sub
 ' /*
 Sub createFile(sheetName As String)
 
-    Dim fileName As String: fileName = outputPath() & "\" & sheetName & "." & outputType()
+    Dim fileName As String: fileName = outputPath() & "\" & sheetName & "." & LCase(outputType())
     Set targetSheet = ThisWorkbook.Worksheets(sheetName)
     MaxCol = targetSheet.Cells(1, Columns.Count).End(xlToLeft).Column
     MaxRow = targetSheet.Cells(Rows.Count, 1).End(xlUp).Row
