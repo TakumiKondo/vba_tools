@@ -80,7 +80,7 @@ Sub createFile(sheetName As String)
         .Open
         For Row = 1 To MaxRow
             For col = 1 To MaxCol
-                .WriteText """" & targetSheet.Cells(Row, col) & """"
+                .WriteText """" & targetSheet.Cells(Row, col).Text & """"
                 If col < MaxCol Then
                     .WriteText delimiter()
                 End If
