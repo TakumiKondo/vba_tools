@@ -19,16 +19,14 @@ End Sub
 
 '// A1＆拡大率100%を設定する
 Private Sub setA1And100Per(Path)
-    '// A1＆拡大率100％を設定する
+    '// A1＆拡大率100％を設定する（ルートフォルダ）
     Call executeA1And100Per(Path)
     
     '// サブフォルダを再帰する
-    Dim f As Object
-    With CreateObject("Scripting.FileSystemObject")
-        For Each f In .GetFolder(Path).SubFolders
-            Call setA1And100Per(f.Path)
-        Next f
-    End With
+    If ActiveSheet.CheckBoxes("CheckBox").Value = 1 Then
+        recursion (Path)
+    End If
+
 End Sub
 
 
@@ -77,4 +75,20 @@ Continue:
         ' 次のファイル名を取得
         strFileName = Dir()
     Loop
+End Sub
+
+' /**
+' * A1セルへのカーソル移動と拡大率100％のサブルーチンを
+' * サブフォルダに対して再帰的に呼び出す。
+' *
+' * @Param Path 処理対象のフォルダパス
+' *
+' **/
+Private Sub recursion(Path)
+    Dim f As Object
+    With CreateObject("Scripting.FileSystemObject")
+        For Each f In .GetFolder(Path).SubFolders
+            Call setA1And100Per(f.Path)
+        Next f
+    End With
 End Sub
