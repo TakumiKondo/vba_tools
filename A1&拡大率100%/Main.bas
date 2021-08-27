@@ -12,8 +12,13 @@ Sub Main()
         Exit Sub
     End If
     
+    
+    Call beforeExecution
     '// A1•Šg‘å—¦100%‚ğİ’è‚·‚é
     Call setA1And100Per(Path)
+    Call afterExecution
+    
+    MsgBox "Š®—¹‚µ‚Ü‚µ‚½B"
 
 End Sub
 
